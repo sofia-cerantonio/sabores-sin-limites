@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tienda — Sabores sin Límites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+    {% extends "base.html" %}
+    {% block content %}
+    
+    <h2><b>Carrito de compras</b></h2>
+    
+    {% if cart %}
+    <table border="1" cellpadding="10" cellspacing="0" style="margin-top:12px; width:100%">
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+        <th>Acciones</th>
+      </tr>
+      {% for item in cart %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>${{ "%.2f"|format(item.price) }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ "%.2f"|format(item.price * item.quantity) }}</td>
+        <td>
+          <a href="{{ url_for('remove_from_cart', product_id=item.id) }}" 
+             class="text-danger fs-4 d-block" 
+             title="Eliminar producto">
+              <i class="bi bi-x-circle"></i>
+          </a>
+      </td>
+      </tr>
+      {% endfor %}
+    </table>
+    
+    <h3 style="margin-top:12px;">Total: ${{ "%.2f"|format(total) }}</h3>
+    
+    <a href="{{ url_for('clear_cart') }}" class="btn">Vaciar carrito</a>
+    <a href="{{ url_for('shop') }}" class="btn">Seguir comprando</a>
+    
+    {% else %}
+    <p>Tu carrito está vacío 🛍️</p>
+    {% endif %}
+    
+    {% endblock %}
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+</body>
+</html>

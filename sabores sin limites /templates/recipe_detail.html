@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ recipe.title }} — Sabores sin Límites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-recetas.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body style="background-color: #fbf8f4;">
+
+    {% extends "base.html" %}
+    {% block content %}
+  
+  <main class="container">
+    <a href="{{ url_for('recipes') }}" class="btn btn-outline-danger btn-sm mb-4">← Volver a Recetas</a>
+
+    <section class="recipe-detail">
+      <h2 class="mb-4"><b>{{ recipe.title }}</b></h2>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <img src="{{ url_for('static', filename='images/' + recipe.image) }}" alt="{{ recipe.title }}" class="img-fluid rounded shadow-sm">
+        </div>
+        <div class="col-md-6">
+          <p class="lead">{{ recipe.description }}</p>
+          <hr>
+          <h4>Información Nutricional y Tipos</h4>
+          <p><strong>Tipo:</strong> <span class="badge bg-success">{{ recipe.type }}</span></p>
+          <p><strong>Nutrición:</strong> {{ recipe.nutrition }}</p>
+          
+        <h4 class="mt-4">Ingredientes</h4>
+        <ul class="list-group mb-4">
+            {% for item in recipe.ingredients.split('\n') %}
+                <li class="list-group-item">{{ item }}</li>
+            {% endfor %}
+        </ul>
+                
+        <h4 class="mt-4">Preparación</h4>
+        <ol class="list-group list-group-numbered">
+            {% for step in recipe.instructions.split('\n') %}
+                <li class="list-group-item">{{ step }}</li>
+            {% endfor %}
+        </ol>
+        </div>
+      </div>
+    </section>
+
+    <hr class="my-5">
+
+
+    
+    <section class="forum-section">
+      <h3>Foro de Recomendaciones y Comentarios</h3>
+      <p class="text-muted">Comparte tus tips o preguntas sobre esta receta.</p>
+    
+      <div class="card p-3 mb-4 shadow-sm">
+          <form id="commentForm">
+              <div class="mb-3">
+                  <label for="userName" class="form-label">Tu Nombre</label>
+                  <input type="text" class="form-control" id="userName" required>
+              </div>
+              
+              <div class="mb-3">
+                  <label for="commentText" class="form-label">Tu Recomendación/Comentario</label>
+                  <textarea class="form-control" id="commentText" rows="3" required></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-success">Enviar Comentario</button>
+          </form>
+      </div>
+    
+      <div id="commentsContainer" class="mt-4">
+          </div>
+    </section>
+    
+
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Obtener el ID de la receta de Jinja2
+        const RECIPE_ID = {{ recipe.id }}; 
+        const COMMENTS_KEY = `forum_recipe_${RECIPE_ID}`;
+        const commentsContainer = document.getElementById('commentsContainer');
+        const commentForm = document.getElementById('commentForm');
+    
+        function loadComments() {
+            commentsContainer.innerHTML = '';
+            const comments = JSON.parse(localStorage.getItem(COMMENTS_KEY)) || [];
+    
+            if (comments.length === 0) {
+                commentsContainer.innerHTML = '<p class="text-muted">Sé el primero en dejar un comentario o recomendación.</p>';
+                return;
+            }
+    
+            // Mostrar los mensajes
+            comments.forEach(comment => {
+                const date = new Date(comment.timestamp);
+                const relativeTime = getRelativeTime(date); // Función auxiliar para mejor UX
+    
+                commentsContainer.innerHTML += `
+                    <div class="comment mb-3 p-3 border rounded bg-white shadow-sm">
+                        <p class="mb-1"><strong>${comment.user}:</strong> ${comment.text}</p>
+                        <small class="text-muted">${relativeTime}</small>
+                    </div>
+                `;
+            });
+        }
+    
+        function saveComment(event) {
+            event.preventDefault(); // Evita que el formulario recargue la página
+    
+            const user = document.getElementById('userName').value.trim();
+            const text = document.getElementById('commentText').value.trim();
+    
+            if (user && text) {
+                const comments = JSON.parse(localStorage.getItem(COMMENTS_KEY)) || [];
+                
+                // Añadir el nuevo comentario
+                comments.unshift({ // unshift añade al inicio para que el más nuevo salga primero
+                    user: user,
+                    text: text,
+                    timestamp: new Date().toISOString()
+                });
+    
+                // Guardar en localStorage
+                localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+    
+                // Recargar comentarios y limpiar formulario
+                loadComments();
+                document.getElementById('userName').value = '';
+                document.getElementById('commentText').value = '';
+            }
+        }
+        
+        // Función auxiliar para mostrar el tiempo de forma amigable (opcional, mejora la UX)
+        function getRelativeTime(date) {
+            const diff = new Date() - date;
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+    
+            if (seconds < 60) return `hace unos segundos`;
+            if (minutes < 60) return `hace ${minutes} minuto${minutes > 1 ? 's' : ''}`;
+            if (hours < 24) return `hace ${hours} hora${hours > 1 ? 's' : ''}`;
+            if (days < 30) return `hace ${days} día${days > 1 ? 's' : ''}`;
+            return date.toLocaleDateString();
+        }
+    
+        // --- Event Listeners y Carga Inicial ---
+        commentForm.addEventListener('submit', saveComment);
+        loadComments();
+    </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sabores sin Límites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">
+          <a href="{{ url_for('index') }}" style="display:flex; align-items:center; text-decoration:none; color:white;">
+            <h1>Sabores sin Límites</h1>
+          </a>
+        </div>
+        <nav class="nav-links">
+          <a href="{{ url_for('recipes') }}">Recetas</a>
+          <a href="{{url_for('shop')}}">Tienda</a>
+          <a href="{{ url_for('cart') }}">Carrito ({{ session.get('cart', [])|length }})</a>
+        </nav>
+      </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer" style="  background-color: #fbf8f4;">
+    <p>© 2025 Sabores sin Límites — Alimentación saludable para todos</p>
+  </footer>
+</body>
+</html>
