@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS products (
     image TEXT,
     tipo_dieta TEXT,
     category TEXT,
-    price REAL
+    price INT
 )
 """)
 

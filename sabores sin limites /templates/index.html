@@ -126,6 +126,41 @@
     
     
 
+    <section>
+      <h3 class="fw-bold mb-4">Recetas Destacadas</h3>
+    
+      <div id="productsGrid" class="row row-cols-1 row-cols-md-2 g-4">
+    
+        {% for recipe in recipes %}
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0">
+            <img src="{{ url_for('static', filename='image/' + recipe['image']) }}" 
+                 alt="{{ recipe['title'] }}" 
+                 class="card-img-top" style="height: 200px; object-fit: cover;">
+    
+            <div class="card-body p-4">
+              <h4 class="card-title fw-bold">{{ recipe['title'] }}</h4>
+              <p class="card-text text-muted">{{ recipe['description'] }}</p>
+    
+              <div class="mt-3">
+                <a href="{{ url_for('recipe_detail', recipe_id=recipe['id']) }}" class="btn btn- mt-auto align-self-start">
+                  Ver Receta
+              </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    
+      <div class="text-center mt-5">
+        <a href="{{ url_for('recipes') }}" class="btn btn-danger btn-lg shadow-sm">
+          Ver el Recetario Completo
+        </a>
+      </div>
+    </section>
+    
+
     <!-- ============================================= -->
     <!-- SECCIÓN: PRODUCTOS DESTACADOS (Manual/Estática) -->
     <!-- ============================================= -->
@@ -134,26 +169,26 @@
       <!-- Usamos un layout de grilla responsivo para las tarjetas -->
       <div id="productsGrid" class="row row-cols-1 row-cols-md-2 g-4">
         
-        <!-- Producto 1: Milanesa Napolitana Vegana (Sin Lactosa) -->
+        <!-- Bucle de Jinja2: Recorre los 2 productos destacados (featured_products) -->
+        {% for product in featured_products %}
         <div class="col">
           <div class="card h-100 shadow-sm border-0">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <!-- Usando el nombre de imagen proporcionado -->
-                    <img src="{{ url_for('static', filename='image/milanesa_vegana_sinlactosa.jpg') }}" 
+                    <img src="{{ url_for('static', filename='image/' + product['image']) }}" 
                          class="img-fluid rounded-start h-100" 
-                         alt="Milanesa Napolitana Vegana"
+                         alt="{{ product['name'] }}"
                          style="object-fit: cover;">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body d-flex flex-column h-100">
-                        <h5 class="card-title fw-bold">Milanesa Napolitana Vegana</h5>
-                        <p class="card-text small text-muted mb-auto">Milanesas de proteína vegetal con salsa y queso vegano. Congeladas, sin lácteos.</p>
+                        <h5 class="card-title fw-bold">{{ product['name'] }}</h5>
+                        <p class="card-text small text-muted mb-auto">{{ product['description'] }}</p>
                         
                         <div class="d-flex justify-content-between align-items-center mt-3">
-                            <p class="mb-0 fw-bold" style="color: #c66a39;">$8500</p>
-                            <!-- Asumiendo que la ID es 201 -->
-                            <a href="{{ url_for('add_to_cart', product_id=201) }}" class="btn btn-success btn-sm">
+                            <!-- Utilizamos round(2) para asegurar 2 decimales en el precio -->
+                            <p class="mb-0 fw-bold" style="color: #c66a39;">${{ product['price'] | round(2) }}</p>
+                            <a href="{{ url_for('add_to_cart', product_id=product['id']) }}" class="btn btn-success btn-sm">
                                 <i class="bi bi-cart-plus"></i> Añadir
                             </a>
                         </div>
@@ -162,35 +197,8 @@
             </div>
           </div>
         </div>
+        {% endfor %}
         
-        <!-- Producto 2: Curry en Polvo Keto/Diabético -->
-        <div class="col">
-          <div class="card h-100 shadow-sm border-0">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <!-- Usando el nombre de imagen proporcionado -->
-                    <img src="{{ url_for('static', filename='images/curry_especias.jpg') }}" 
-                         class="img-fluid rounded-start h-100" 
-                         alt="Curry en Polvo Keto/Diabético"
-                         style="object-fit: cover;">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body d-flex flex-column h-100">
-                        <h5 class="card-title fw-bold">Curry en Polvo Especial</h5>
-                        <p class="card-text small text-muted mb-auto">Mezcla de especias para curry, sin azúcar ni harinas añadidas. Apto diabéticos.</p>
-                        
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <p class="mb-0 fw-bold" style="color: #c66a39;">$4200</p>
-                            <!-- Asumiendo que la ID es 202 -->
-                            <a href="{{ url_for('add_to_cart', product_id=202) }}" class="btn btn-success btn-sm">
-                                <i class="bi bi-cart-plus"></i> Añadir
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="text-center mt-5">
         <a href="{{ url_for('shop') }}" class="btn btn-outline-secondary btn-lg shadow-sm">Ir a la Tienda Completa</a>
