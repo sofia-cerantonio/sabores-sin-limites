@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <!-- NAVBAR -->
   <header class="navbar">
     <div class="brand">
       <a href="{{ url_for('index') }}" style="display:flex; align-items:center; text-decoration:none; color:white;">
@@ -23,30 +22,33 @@
     </nav>
   </header>
 
-  <!-- 🔸 CONTENIDO PRINCIPAL -->
   <main class="container">
     <h2><b>Compra saludable</b></h2>
     <p>Elegí tus platos listos o ingredientes saludables y recibilos en casa.</p>
 
-    <!-- 🔍 BUSCADOR -->
-    <div class="searchbar">
-      <input id="searchShop" type="search" placeholder="Buscar producto" style="flex:1;padding:8px;border:0;outline:none">
-      
-      <button id="searchShopBtn" class="btn btn-success btn-sm">Buscar</button>
+    <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center mb-4">
+        <input id="searchShop" type="search" 
+               placeholder="Buscar nombre ..." 
+               class="form-control me-md-3 mb-2 mb-md-0" 
+               style="flex:1;">
+        
+            <div class="btn-group" role="group" aria-label="Filtros de Categoría">
+                <button type="button" class="btn btn-outline-marron filter-category active" data-filter="all">Todos</button>
+                <button type="button" class="btn btn-outline-marron filter-category" data-filter="plato_preparado">Platos Listos</button>
+                <button type="button" class="btn btn-outline-marron filter-category" data-filter="otros">Otros Productos</button>
+            </div>
     </div>
-
-    <!-- 🛒 GRID DE PRODUCTOS -->
     <section style="margin-top:18px">
       <div class="row row-cols-1 row-cols-md-2 g-4" id="productsGrid"> 
         
         {% for product in products %}
         
-        <div class="col">
+        <div class="col product-card" data-category="{{ product['category'] }}">
             <div class="card mb-3 shadow-sm h-100"> 
                 <div class="row g-0">
                     
                     <div class="col-4">
-                        <img src="{{ url_for('static', filename='images/' + product['image']) }}" 
+                        <img src="{{ url_for('static', filename='image/' + product['image']) }}" 
                              class="img-fluid rounded-start" 
                              alt="{{ product['name'] }}"
                              style="height: 100%; width: 100%; object-fit: cover;"> 
@@ -57,6 +59,11 @@
                             
                             <h5 class="card-title">{{ product['name'] }}</h5>
                             
+                            <p class="card-text small text-muted">
+                                Tipo: <span class="badge bg-secondary me-2">{{ product['diet_type'] }}</span>
+                                <span class="badge bg-secondary">{{ product['category'] | replace('_', ' ') | title }}</span>
+                            </p>
+
                             <p class="card-text small">{{ product['description'] }}</p>
                             
                             <div class="mt-auto d-flex justify-content-between align-items-center">
@@ -83,7 +90,7 @@
 
   <footer class="footer m-3" style=" background-color: #fbf8f4;">Hecho con amor y salud | Sabores sin Límites</footer>
 
-  <script src="{{ url_for('static', filename='js/shop.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/shop.js') }}"></script> 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

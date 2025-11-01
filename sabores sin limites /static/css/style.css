@@ -57,3 +57,37 @@ body {
 .footer{
   text-align: center;
 }
+
+
+
+/* Definición de botón OUTLINE MARRÓN */
+.btn-outline-marron {
+  /* Color del texto y del borde */
+  color: #5c4033; 
+  border-color: #5c4033;
+  /* Evitar que el fondo cambie en hover si el color es muy claro */
+  background-color: transparent; 
+}
+
+/* Efecto HOVER (al pasar el ratón) */
+.btn-outline-marron:hover,
+.btn-outline-marron:focus {
+  /* Fondo con el color de acento claro de tu diseño */
+  background-color: #c66a39; 
+  border-color: #c66a39;
+  color: white; /* Texto blanco para contraste */
+}
+
+/* Estado ACTIVO/SELECCIONADO */
+.btn-outline-marron.active {
+  /* El botón seleccionado debe tener fondo marrón oscuro */
+  background-color: #5c4033;
+  border-color: #5c4033;
+  color: white;
+}
+
+/* Asegurar que el focus no cambie el color */
+.btn-outline-marron:focus,
+.btn-outline-marron.active:focus {
+  box-shadow: 0 0 0 0.25rem rgba(92, 64, 51, 0.5); /* Sombra marron semi-transparente */
+}

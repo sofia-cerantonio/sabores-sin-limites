@@ -128,6 +128,7 @@ def clear_cart():
     session.pop("cart", None)
     return redirect(url_for("cart"))
 
+
 # --- Ejecutar servidor ---
 if __name__ == "__main__":
     app.run(debug=True)

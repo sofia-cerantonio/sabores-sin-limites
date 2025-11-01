@@ -21,7 +21,7 @@
       <h2 class="mb-4"><b>{{ recipe.title }}</b></h2>
       <div class="row">
         <div class="col-md-6 mb-4">
-          <img src="{{ url_for('static', filename='images/' + recipe.image) }}" alt="{{ recipe.title }}" class="img-fluid rounded shadow-sm">
+          <img src="{{ url_for('static', filename='image/' + recipe.image) }}" alt="{{ recipe.title }}" class="img-fluid rounded shadow-sm">
         </div>
         <div class="col-md-6">
           <p class="lead">{{ recipe.description }}</p>

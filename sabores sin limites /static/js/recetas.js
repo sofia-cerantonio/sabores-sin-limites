@@ -2,89 +2,98 @@ document.addEventListener("DOMContentLoaded", () => {
     // Referencias a elementos del DOM
     const searchInput = document.getElementById("q");
     const searchButton = document.getElementById("searchBtn");
-    const filters = document.querySelectorAll(".filter-cb");
-    
-    // 🎯 CAMBIO CRÍTICO 1: Seleccionar las nuevas estructuras de receta (div.row)
-    // Asumimos que están en un contenedor con ID, o seleccionamos todas las .row que tienen data-type
-    // Si usaste <div id="recipesList">, selecciona sus hijos directos:
+    // Seleccionamos todos los botones dentro del grupo de filtros
+    const filterButtons = document.querySelectorAll(".btn-group .btn"); 
+    // Seleccionamos todas las tarjetas de receta (las filas)
     const cards = document.querySelectorAll("#recipesList > .row"); 
 
+    // Estado actual de la búsqueda y el filtro
+    let currentSearchQuery = '';
+    let currentDietFilter = 'all'; 
+
     /**
-     * Función principal para aplicar el filtro y la búsqueda.
-     * Se llama cada vez que cambia un filtro o se realiza una búsqueda.
+     * Función principal para aplicar el filtro de dieta y la búsqueda.
      */
     const applyFiltersAndSearch = () => {
-        // 1. Obtener filtros activos (Checkbox)
-        const activeFilters = Array.from(filters)
-            .filter(cb => cb.checked)
-            .map(cb => cb.value);
+        // Normalizar la consulta de búsqueda
+        const searchQuery = currentSearchQuery.toLowerCase().trim();
+        const activeDiet = currentDietFilter;
 
-        // 2. Obtener el valor de la búsqueda (Input)
-        const searchQuery = searchInput.value.toLowerCase().trim();
-
-        // 3. Iterar sobre todas las "tarjetas" (ahora filas de Bootstrap)
         cards.forEach(card => {
-            // Obtiene 'sin lactosa,diabetes,...' (Funciona igual con data-type en el div.row)
+            // Obtiene 'sin-lactosa,diabetes,...' del atributo data-type
             const cardType = card.dataset.type || ''; 
             
-            // 🎯 OBTENCIÓN DE CONTENIDO: Buscar el contenido dentro de la columna de texto (col-md-8).
-            // Asumimos que el contenido de texto está en el SEGUNDO hijo de .row (índice 1)
+            // Obtener el contenido de texto (Título y Descripción)
             const contentContainer = card.children[1]; 
-            
-            // Si el contenedor de contenido es válido, extraemos título y descripción
-            if (contentContainer) {
-                const cardTitle = contentContainer.querySelector('h3').textContent.toLowerCase();
-                const cardDescription = contentContainer.querySelector('p').textContent.toLowerCase();
-                
-                // ----------------------------------------------------
-                // Criterio 1: Coincidencia de Filtros (Checkbox)
-                // ----------------------------------------------------
-                const matchesFilters = activeFilters.every(filter => 
-                    // Nota: Asegúrate que 'cardType' en la DB use comas o espacios si hay múltiples valores.
-                    cardType.includes(filter)
-                );
+            const cardTitle = contentContainer ? contentContainer.querySelector('h3').textContent.toLowerCase() : '';
+            const cardDescription = contentContainer ? contentContainer.querySelector('p').textContent.toLowerCase() : '';
 
-                // ----------------------------------------------------
-                // Criterio 2: Coincidencia de Búsqueda (Input)
-                // ----------------------------------------------------
-                const matchesSearch = !searchQuery || 
-                                    cardTitle.includes(searchQuery) ||
-                                    cardDescription.includes(searchQuery);
+            // ----------------------------------------------------
+            // Criterio 1: Coincidencia de Filtros de Dieta (Botones)
+            // ----------------------------------------------------
+            let matchesDiet = (activeDiet === 'all') || cardType.includes(activeDiet);
 
-                // ----------------------------------------------------
-                // Mostrar/Ocultar
-                // ----------------------------------------------------
-                // La tarjeta se muestra si cumple AMBOS criterios
-                if (matchesFilters && matchesSearch) {
-                    // 🎯 CAMBIO CRÍTICO 2: Las filas de Bootstrap usan display: flex
-                    card.style.display = "flex"; 
-                } else {
-                    card.style.display = "none";
-                }
+            // ----------------------------------------------------
+            // Criterio 2: Coincidencia de Búsqueda (Input)
+            // ----------------------------------------------------
+            const matchesSearch = !searchQuery ||
+                                  cardTitle.includes(searchQuery) ||
+                                  cardDescription.includes(searchQuery);
+
+            // ----------------------------------------------------
+            // Mostrar/Ocultar
+            // ----------------------------------------------------
+            if (matchesDiet && matchesSearch) {
+                card.style.display = "flex"; 
             } else {
-                // Si la estructura no es la esperada, por seguridad, ocultar
                 card.style.display = "none";
             }
         });
     };
 
-    // --- Event Listeners (SIN CAMBIOS) ---
-
-    // 1. Eventos para los Checkboxes (Cambio)
-    filters.forEach(filter => {
-      filter.addEventListener("change", applyFiltersAndSearch);
+    // --- Event Listeners para la Búsqueda ---
+    searchInput.addEventListener("input", (event) => {
+        // Actualiza la búsqueda en tiempo real
+        currentSearchQuery = event.target.value;
+        applyFiltersAndSearch();
     });
+    
+    // Evento para el botón Buscar (si lo mantuviste)
+    if (searchButton) {
+        searchButton.addEventListener("click", applyFiltersAndSearch);
+    }
 
-    // 2. Evento para el Botón Buscar (Click)
-    searchButton.addEventListener("click", applyFiltersAndSearch);
 
-    // 3. Evento para el campo de Búsqueda (Tecla Enter)
-    searchInput.addEventListener("keyup", (event) => {
-        if (event.key === 'Enter') {
+    // --- Event Listeners para el Filtrado de Dieta (Botones) ---
+    filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            // Normalizar el texto del botón al formato de la DB (sin-lactosa, diabetes, etc.)
+            let newFilterValue = button.textContent.toLowerCase().trim();
+            
+            if (newFilterValue === 'todos') {
+                newFilterValue = 'all';
+            } else if (newFilterValue.includes('sin lactosa')) {
+                newFilterValue = 'sin-lactosa';
+            } else if (newFilterValue.includes('diabetes')) {
+                newFilterValue = 'diabetes';
+            } else if (newFilterValue.includes('hipertensión')) {
+                newFilterValue = 'hipertensión';
+            } else if (newFilterValue.includes('sin tacc')) {
+                newFilterValue = 'sin-tacc';
+            }
+            
+            // 1. Actualizar el filtro activo
+            currentDietFilter = newFilterValue;
+
+            // 2. Actualizar la clase 'active'
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // 3. Aplicar filtros y búsqueda
             applyFiltersAndSearch();
-        }
+        });
     });
 
-    // Ejecutar al cargar para asegurar que los filtros iniciales se apliquen (si es necesario)
-    // applyFiltersAndSearch(); 
+    // Ejecutar al cargar para mostrar todas las recetas inicialmente
+    applyFiltersAndSearch();
 });

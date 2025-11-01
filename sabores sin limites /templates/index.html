@@ -6,9 +6,11 @@
   <title>Sabores sin Límites</title>
   <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body style="background-color: #fbf8f4;">
+  
   <header class="navbar" style="padding: 25px;">
     <div class="brand">
       <a href="{{ url_for('index') }}" style="display:flex; align-items:center; text-decoration:none; color:white;">
@@ -22,48 +24,183 @@
     </nav>
   </header>
   
-
-
-
   <main> 
-    <section class="hero container"> 
-      <div class="row">
-        <div class="col-12  mx-auto" style="color:#5c4033;"> 
-          <p class="h6 text-uppercase fw-semibold m-3">La nueva forma de comer</p>
-          <h1 class="main-title display-1 fw-bold">Sabores sin límites</h1>
-          <p class="lead mb-4 mt-4 main-subtitle">
-            Platos del mundo, reinventados para ti. Recetas auténticas y fáciles para dietas especiales.
+    <!-- La sección HERO contiene el texto principal y solo el contenido CONSTRANGIDO -->
+    <section class="hero container pt-5 pb-5 pt-md-28 pb-md-4 text-center"> 
+      <div class="row align-items-center">
+        <!-- Contenido de Texto Centrado -->
+        <div class="col-12 mx-auto" style="color:#5c4033;"> 
+          <span class="d-inline-block mb-3 text-uppercase fw-semibold" style="letter-spacing: 2px;">Cocina Deliciosa. Vida sin Límites.</span>
+          <h1 class="main-title display-2 fw-bold" style="font-family: 'Prata', serif; font-weight: 500;">
+            Platos del mundo, reinventados para ti
+          </h1>
+          <p class="lead mb-4 mt-4 main-subtitle mw-lg mx-auto">
+            Recetas auténticas y fáciles para dietas especiales: sin lactosa, bajas en sodio, sin TACC y para diabéticos.
           </p>
-          <a href="#productos-section" class="btn btn-outline-danger btn-ronder btn-lg my-3">Descubre nuestros productos <i class="bi bi-arrow-right-short"></i></a>
-      </div>
-    
-      </div>
-      <div>
-        <img src="{{ url_for('static', filename='images/hero-diner.png') }}" alt="Ilustración" style="max-width:320px;width:100%">
-      </div>
-    </section>
-
-    <section class="container" style="margin-top:18px">
-      <h3>Recetas destacadas</h3>
-      <div id="recipesGrid" class="grid">
-        <div class="card">
-            <img src="..." alt="Receta">
-            <div class="card-content">
-                <h4>Título Receta</h4>
-                <p>Descripción corta...</p>
-            </div>
+          <a href="{{ url_for('recipes') }}" class="btn btn-danger btn-lg my-4 shadow">Explorar Recetas Adaptadas <i class="bi bi-arrow-right-short"></i></a>
         </div>
       </div>
     </section>
 
-<footer class="footer m-3" style=" background-color: #fbf8f4;">© Sabores sin Límites — Hecho con cariño </footer>
+    <!-- CARRUSEL DE ANCHO COMPLETO (FUERA DE .container) -->
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" style="margin-bottom: 2rem;">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        
+        <div class="carousel-item active">
+          <!-- Placeholder de Gris Cálido -->
+          <img src="https://placehold.co/1200x600/e0e0e0/5c4033?text=Descubre+Sabores+Nuevos" class="d-block w-100" alt="Plato principal saludable" style="height: 600px; object-fit: cover;">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2 rounded">
+            <h5>Descubre Sabores Nuevos</h5>
+            <p>Miles de recetas pensadas para cuidar tu salud sin renunciar al gusto.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img src="{{url_for('static', filename='image/portada.jpg') }}"
+               class="d-block w-100"
+               alt="Ingredientes frescos para dietas variadas"
+               style="height: 600px; object-fit: cover;">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2 rounded">
+            <h5>Filtros para Cada Dieta</h5>
+            <p>Encuentra opciones Sin TACC, sin lactosa, y bajas en sodio al instante.</p>
+          </div>
+        </div>
+        
+
+        <div class="carousel-item">
+          <img src="https://placehold.co/1200x600/c66a39/ffffff?text=Tienda+de+Productos" class="d-block w-100" alt="Productos de tienda" style="height: 600px; object-fit: cover;">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2 rounded">
+            <h5>Tu Tienda de Ingredientes Especiales</h5>
+            <p>Todo lo que necesitas, entregado en tu casa.</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+    <!-- FIN DEL CARRUSEL DE ANCHO COMPLETO -->
+    
+    <section class="container py-5 py-md-5" style="margin-top:20px" >
+        <div class="mw-xxl mx-auto text-center mb-5">
+            <h2 class="display-6 fw-bold">Nuestra Promesa: Seguridad y Sabor</h2>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            
+            <div class="col">
+                <div class="card p-4 h-100 border-0 shadow-sm">
+                    <i class="bi bi-shield-lock-fill display-5 mb-3" style="color: #c66a39;"></i>
+                    <h5 class="fw-bold">Validación Nutricional</h5>
+                    <p class="text-muted">Recetas probadas y adaptadas para cumplir estrictos requisitos de dietas especiales (TACC, Lactosa, etc.).</p>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card p-4 h-100 border-0 shadow-sm">
+                    <i class="bi bi-heart-fill display-5 mb-3" style="color: #c66a39;"></i>
+                    <h5 class="fw-bold">Sabores Auténticos</h5>
+                    <p class="text-muted">Platos que no sacrifican el sabor. Redescubre tus comidas favoritas con confianza y deleite.</p>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card p-4 h-100 border-0 shadow-sm">
+                    <i class="bi bi-people-fill display-5 mb-3" style="color: #c66a39;"></i>
+                    <h5 class="fw-bold">Comunidad Activa</h5>
+                    <p class="text-muted">Comparte experiencias, sustituciones y consejos en nuestro foro. No estás solo en este camino.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    
+
+    <!-- ============================================= -->
+    <!-- SECCIÓN: PRODUCTOS DESTACADOS (Manual/Estática) -->
+    <!-- ============================================= -->
+    <section class="container py-5" style="margin-top:18px">
+      <h3 class="fw-bold mb-4">Productos Destacados</h3>
+      <!-- Usamos un layout de grilla responsivo para las tarjetas -->
+      <div id="productsGrid" class="row row-cols-1 row-cols-md-2 g-4">
+        
+        <!-- Producto 1: Milanesa Napolitana Vegana (Sin Lactosa) -->
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <!-- Usando el nombre de imagen proporcionado -->
+                    <img src="{{ url_for('static', filename='image/milanesa_vegana_sinlactosa.jpg') }}" 
+                         class="img-fluid rounded-start h-100" 
+                         alt="Milanesa Napolitana Vegana"
+                         style="object-fit: cover;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body d-flex flex-column h-100">
+                        <h5 class="card-title fw-bold">Milanesa Napolitana Vegana</h5>
+                        <p class="card-text small text-muted mb-auto">Milanesas de proteína vegetal con salsa y queso vegano. Congeladas, sin lácteos.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <p class="mb-0 fw-bold" style="color: #c66a39;">$8500</p>
+                            <!-- Asumiendo que la ID es 201 -->
+                            <a href="{{ url_for('add_to_cart', product_id=201) }}" class="btn btn-success btn-sm">
+                                <i class="bi bi-cart-plus"></i> Añadir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Producto 2: Curry en Polvo Keto/Diabético -->
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <!-- Usando el nombre de imagen proporcionado -->
+                    <img src="{{ url_for('static', filename='images/curry_especias.jpg') }}" 
+                         class="img-fluid rounded-start h-100" 
+                         alt="Curry en Polvo Keto/Diabético"
+                         style="object-fit: cover;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body d-flex flex-column h-100">
+                        <h5 class="card-title fw-bold">Curry en Polvo Especial</h5>
+                        <p class="card-text small text-muted mb-auto">Mezcla de especias para curry, sin azúcar ni harinas añadidas. Apto diabéticos.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <p class="mb-0 fw-bold" style="color: #c66a39;">$4200</p>
+                            <!-- Asumiendo que la ID es 202 -->
+                            <a href="{{ url_for('add_to_cart', product_id=202) }}" class="btn btn-success btn-sm">
+                                <i class="bi bi-cart-plus"></i> Añadir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5">
+        <a href="{{ url_for('shop') }}" class="btn btn-outline-secondary btn-lg shadow-sm">Ir a la Tienda Completa</a>
+      </div>
+    </section>
+
+<footer class="footer m-3 py-3" style=" background-color: #fbf8f4; border-top: 1px solid #c66a3940;">© Sabores sin Límites — Hecho con cariño </footer>
 </main>
 
-
-
-
-
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
