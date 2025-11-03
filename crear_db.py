@@ -187,7 +187,7 @@ products = [
     (
         "Tostadas de Tinga (Pack 2 unid.)", 
         "Tostadas mexicanas listas para consumir. Pollo en salsa chipotle, sin lactosa.", 
-        "tostadas_tinga.jpg", 
+        "shop.jpg", 
         "sin-lactosa", 
         "plato_preparado", 
         6500
@@ -195,7 +195,7 @@ products = [
     (
         "Curry Korma Hindú Congelado", 
         "Curry indio cremoso con vegetales. Listo en 5 minutos, bajo índice glucémico.", 
-        "curry_korma.jpg", 
+        "shop.jpg", 
         "diabetes", 
         "plato_preparado", 
         7800
@@ -219,7 +219,7 @@ products = [
     (
         "Arroz Frito Cantonés Ración", 
         "Arroz integral y vegetales, bajo en sodio. Calentar y servir, ideal para hipertensión.", 
-        "arroz_cantones.jpg", 
+        "shop.jpg", 
         "hipertensión", 
         "plato_preparado", 
         6200
@@ -228,7 +228,7 @@ products = [
     (
         "Mix sin gluten Pan y Pizza", 
         "Harina especial sin TACC para pizzas y panes. Alto rendimiento y textura.", 
-        "mix_pan_pizza.jpg", 
+        "shop.jpg", 
         "sin-tacc", 
         "harina_mix", 
         3500
@@ -236,7 +236,7 @@ products = [
     (
         "Harina de Garbanzo Pura", 
         "Harina ideal para rebozar falafel o espesar guisos. Naturalmente sin gluten.", 
-        "harina_garbanzo.jpg", 
+        "shop.jpg", 
         "sin-tacc", 
         "harina_mix", 
         2900
@@ -245,7 +245,7 @@ products = [
     (
         "Salsa de Tomate Orgánica", 
         "Salsa de tomate casera, orgánica y sin sodio añadido. Bote 500g.", 
-        "salsa_sin_sal.jpg", 
+        "shop.jpg", 
         "hipertensión", 
         "salsas_condimentos", 
         2800
@@ -253,7 +253,7 @@ products = [
     (
         "Paquete de Especias Mediterráneas", 
         "Mezcla artesanal de hierbas y especias para salmón y pollo, sin sal.", 
-        "especias_pack.jpg", 
+        "shop.jpg", 
         "hipertensión", 
         "salsas_condimentos", 
         1800
@@ -261,7 +261,7 @@ products = [
     (
         "Curry en Polvo Keto/Diabético", 
         "Mezcla de especias para curry, sin azúcar ni harinas añadidas. Apto diabéticos.", 
-        "curry_especias.jpg", 
+        "shop.jpg", 
         "diabetes", 
         "salsas_condimentos", 
         4200
@@ -270,7 +270,7 @@ products = [
     (
         "Yogur de Almendras Natural", 
         "Yogur 100% vegetal, sin lactosa ni azúcares añadidos.", 
-        "yogur_almendra.jpg", 
+        "shop.jpg", 
         "sin-lactosa", 
         "lacteos_vegetales", 
         2700
@@ -278,7 +278,7 @@ products = [
     (
         "Postre de Coco y Chía", 
         "Alternativa cremosa sin lactosa con sabor tropical y semillas de chía.", 
-        "postre_coco.jpg", 
+        "shop.jpg", 
         "sin-lactosa", 
         "lacteos_vegetales", 
         3200
@@ -286,7 +286,7 @@ products = [
     (
         "Chips de Manzana Deshidratada", 
         "Snack crujiente y natural sin azúcar añadida. Bolsa grande.", 
-        "snack_manzana.jpg", 
+        "shop.jpg", 
         "diabetes", 
         "snacks_pan", 
         2500
@@ -294,7 +294,7 @@ products = [
     (
         "Pan Integral para Diabéticos", 
         "Pan de molde integral con bajo índice glucémico y edulcorantes naturales.", 
-        "pan_integral.jpg", 
+        "shop.jpg", 
         "diabetes", 
         "snacks_pan", 
         3000
