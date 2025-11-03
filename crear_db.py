@@ -195,7 +195,7 @@ products = [
     (
         "Curry Korma Hindú Congelado", 
         "Curry indio cremoso con vegetales. Listo en 5 minutos, bajo índice glucémico.", 
-        "shop.jpg", 
+        "curry_korma.jpg", 
         "diabetes", 
         "plato_preparado", 
         7800
@@ -219,7 +219,7 @@ products = [
     (
         "Arroz Frito Cantonés Ración", 
         "Arroz integral y vegetales, bajo en sodio. Calentar y servir, ideal para hipertensión.", 
-        "shop.jpg", 
+        "arroz_cantones.jpg", 
         "hipertensión", 
         "plato_preparado", 
         6200
